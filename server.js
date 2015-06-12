@@ -1,4 +1,4 @@
-/*jshint unused:true */
+/*jshint unused:vars */
 var express = require('express');
 
 var app = express();
@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/meanCRM');
 
 var port = process.env.PORT || 8080;
 
@@ -32,10 +33,18 @@ app.get('/', function(req, res){
 });
 
 var apiRouter = express.Router();
+apiRouter.use(function(req, res, next) {
+  console.log('Someone hit da app!!');
+
+  next();
+});
+
 apiRouter.get('/', function(req, res){
   res.json({ message: 'welcome to teh api!' });
 });
 app.use('/api', apiRouter);
+
+var User = require('./app/models/user.js');
 
 app.listen(port);
 console.log('Magic happens on port ' + port);
