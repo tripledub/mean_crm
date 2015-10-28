@@ -162,6 +162,9 @@ apiRouter.route('/users/:user_id')
       res.json({ message: 'Successfully deleted' });
     });
   });
+apiRouter.get('/me', function(req, res) {
+  res.send(req.decoded);
+});
 
 app.listen(port);
 console.log('Magic happens on port ' + port);
